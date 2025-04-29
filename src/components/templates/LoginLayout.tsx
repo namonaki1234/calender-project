@@ -3,7 +3,7 @@ import { useRecoilState } from 'recoil';
 import { loginUserState } from '../../store/LoginUserState';
 import { FaUser } from 'react-icons/fa';
 import { MdLogout } from 'react-icons/md';
-import { login } from '../../api/Login';
+// import { login } from '../../api/Login';
 
 const LoginLayout = () => {
   const navigate = useNavigate();
