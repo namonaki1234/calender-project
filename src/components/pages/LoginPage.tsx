@@ -1,18 +1,65 @@
+import { ChangeEvent, FormEvent, useState } from 'react';
+import { LoginInfoType } from '../../types/Login';
 import { Input } from '../atoms/Input';
 import { PrimaryButton } from '../atoms/PrimaryButton';
+import { login } from '../../api/Login';
 
 export const LoginPage = () => {
+  const [errorMessage, setErrorMessage] = useState('');
+  const [loginInfo, setLoginInfo] = useState<LoginInfoType>({
+    email: '',
+    password: '',
+  });
+
+  const changeLoginInfo = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setLoginInfo({
+      ...loginInfo,
+      [name]: value,
+    });
+  };
+
+  const handleLogin = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setErrorMessage('');
+    try {
+      login(loginInfo);
+    } catch {
+      setErrorMessage('ログインに失敗しました');
+    }
+  };
+
   return (
     <div className="w-[500px] bg-white rounded-lg py-10">
-      <form className="flex flex-col items-center justify-center gap-10">
+      <form
+        onSubmit={handleLogin}
+        className="flex flex-col items-center justify-center gap-10"
+      >
         <h1 className="text-3xl font-bold text-lime-800 text-center">
           ログイン
         </h1>
+        {errorMessage !== '' && (
+          <div className="p-5 bg-red-500 text-white w-[80%] rounded-lg">
+            {errorMessage}
+          </div>
+        )}
         <div className="w-[80%]">
-          <Input type="text" placeholder="email" />
+          <Input
+            name="email"
+            value={loginInfo.email}
+            type="text"
+            placeholder="email"
+            onChange={changeLoginInfo}
+          />
         </div>
         <div className="w-[80%]">
-          <Input type="text" placeholder="password" />
+          <Input
+            name="password"
+            value={loginInfo.password}
+            type="text"
+            placeholder="password"
+            onChange={changeLoginInfo}
+          />
         </div>
         <PrimaryButton onClick={() => null}>ログイン</PrimaryButton>
       </form>
