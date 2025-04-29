@@ -9,12 +9,12 @@ export const LoginPage = () => {
           ログイン
         </h1>
         <div className="w-[80%]">
-          <Input type='text' placeholder='email'/>
+          <Input type="text" placeholder="email" />
         </div>
         <div className="w-[80%]">
-        <Input type='text' placeholder='password'/>
+          <Input type="text" placeholder="password" />
         </div>
-        <PrimaryButton>ログイン</PrimaryButton>
+        <PrimaryButton onClick={() => null}>ログイン</PrimaryButton>
       </form>
     </div>
   );
