@@ -1,8 +1,10 @@
-type PropasType = {
-  children: React.ReactNode;
-};
+import { Outlet } from 'react-router-dom';
 
-export const NotLoginLayout = ({ children }: PropasType) => {
+// type PropasType = {
+//   children: React.ReactNode;
+// };
+
+export const NotLoginLayout = () => {
   return (
     <div className="relative">
       <header className="fixed top-0 right-0 left-0 bg-white">
@@ -16,7 +18,10 @@ export const NotLoginLayout = ({ children }: PropasType) => {
           </nav>
         </div>
       </header>
-      <main className="pt-[50px] bg-gradient-to-r from-lime-100 to-lime-200 h-screen flex flex-col items-center justify-center"></main>
+      <main className="pt-[50px] bg-gradient-to-r from-lime-100 to-lime-200 h-screen flex flex-col items-center justify-center">
+        <Outlet />
+        {/* {children} */}
+      </main>
     </div>
   );
 };
