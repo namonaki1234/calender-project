@@ -1,7 +1,7 @@
 import { useRecoilValue } from "recoil";
 import { loginUserState } from "../../store/LoginUserState";
 
-export const Calender = () => {
+export const CalenderPage = () => {
     const loginUser = useRecoilValue(loginUserState); // 値のみ使用
     
   return (
