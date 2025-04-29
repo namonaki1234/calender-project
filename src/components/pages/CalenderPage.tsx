@@ -5,6 +5,8 @@ import {
   endOfWeek,
   getDate,
   getMonth,
+  isSameMonth,
+  isToday,
   startOfMonth,
 } from 'date-fns';
 import { DAYS_LIST } from '../../constans/calender';
@@ -13,6 +15,11 @@ import { useEffect, useState } from 'react';
 export const CalenderPage = () => {
   const today = new Date();
   const [dateList, setDateList] = useState<Date[][]>([]);
+
+  const dateColor = (target: Date, currentDate: Date) => {
+    if (isToday(target)) return 'bg-lime-800 text-white rounded-full';
+    return isSameMonth(target, currentDate) ? 'text-black' : 'text-gray-300';
+  };
 
   useEffect(() => {
     const monthOfSundayList = eachWeekOfInterval({
@@ -55,7 +62,12 @@ export const CalenderPage = () => {
                   key={`day-${getDate(item)}`}
                   className="bg-white h-[10vh] border-2 border-solid border-lime-800"
                 >
-                  <span className="inline-block w-[20px] leading-[20px] text-center mb-15">
+                  <span
+                    className={`inline-block w-[20px] leading-[20px] text-center mb-15 ${dateColor(
+                      item,
+                      today
+                    )} `}
+                  >
                     {getDate(item)}
                   </span>
                 </td>
