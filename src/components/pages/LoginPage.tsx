@@ -1,17 +1,24 @@
-import { ChangeEvent, FormEvent, useState } from 'react';
+import { ChangeEvent, FormEvent, use, useState } from 'react';
 import { LoginInfoType } from '../../types/Login';
 import { Input } from '../atoms/Input';
 import { PrimaryButton } from '../atoms/PrimaryButton';
 import { login } from '../../api/Login';
+import { useSetRecoilState } from 'recoil';
+import { loginUserState } from '../../store/LoginUserState';
+import { useNavigate } from 'react-router-dom';
 
 export const LoginPage = () => {
+  const navigate = useNavigate();
+  // const loginUser = useRecoilValue(loginUserState); 値のみ使用
+  // const [loginUser, setLoginUser] = useRecoilState(loginUserState); // usestateと同様にstate,setstateを使用
+  const setLoginUser = useSetRecoilState(loginUserState); // setstateのみ使用
   const [errorMessage, setErrorMessage] = useState('');
   const [loginInfo, setLoginInfo] = useState<LoginInfoType>({
     email: '',
     password: '',
   });
 
-  const changeLoginInfo = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const changeLoginInfo = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setLoginInfo({
       ...loginInfo,
@@ -23,7 +30,12 @@ export const LoginPage = () => {
     e.preventDefault();
     setErrorMessage('');
     try {
-      login(loginInfo);
+      const resUser = login(loginInfo);
+      setLoginUser({
+        id: resUser.id,
+        name: resUser.name,
+      });
+      navigate('/calender'); // ログイン成功後にカレンダーページに遷移
     } catch {
       setErrorMessage('ログインに失敗しました');
     }
