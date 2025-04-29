@@ -1,6 +1,6 @@
 import { Link, Outlet } from 'react-router-dom';
 
-// type PropasType = {
+// type PropsType = {
 //   children: React.ReactNode;
 // };
 
